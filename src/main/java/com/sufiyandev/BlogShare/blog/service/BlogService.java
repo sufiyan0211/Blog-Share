@@ -39,7 +39,6 @@ public class BlogService {
 
         Long userId = jwtService.retrieveUserId(accessToken);
         User user = userRepository.findById(userId).orElseThrow(() -> new UserService.UserNotFoundException(userId));
-        userRepository.save(user);
         blog.setCreatedBy(user);
 
         blog.setCreatedAt(LocalDate.now());
