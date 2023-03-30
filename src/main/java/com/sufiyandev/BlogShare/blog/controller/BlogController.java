@@ -23,8 +23,16 @@ public class BlogController {
     private ModelMapper modelMapper;
 
     @PostMapping("/create")
-    private ResponseEntity<BlogResponse> createBlog(@RequestBody BlogCreation blogCreation) {
+    private ResponseEntity<BlogResponse> createBlog(@RequestBody BlogCreation blogCreation,
+                                                    @RequestHeader("Authorization") String authorization) {
         Blog blog = blogService.createBlog(blogCreation);
+        String token = authorization.substring("Bearer ".length());
+//        User user =
+//        blog.setCreatedBy();
+
+//        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+//        return claims.getSubject();
+
         BlogResponse blogResponse = modelMapper.map(blog, BlogResponse.class);
         return ResponseEntity.ok(blogResponse);
     }
