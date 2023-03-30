@@ -6,6 +6,7 @@ import com.sufiyandev.BlogShare.blog.dto.UpdateBlog;
 import com.sufiyandev.BlogShare.blog.model.Blog;
 import com.sufiyandev.BlogShare.blog.service.BlogService;
 import com.sufiyandev.BlogShare.exception.BlogException;
+import com.sufiyandev.BlogShare.user.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,13 +26,8 @@ public class BlogController {
     @PostMapping("/create")
     private ResponseEntity<BlogResponse> createBlog(@RequestBody BlogCreation blogCreation,
                                                     @RequestHeader("Authorization") String authorization) {
-        Blog blog = blogService.createBlog(blogCreation);
-        String token = authorization.substring("Bearer ".length());
-//        User user =
-//        blog.setCreatedBy();
-
-//        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-//        return claims.getSubject();
+        String accessToken = authorization.substring("Bearer ".length());
+        Blog blog = blogService.createBlog(blogCreation, accessToken);
 
         BlogResponse blogResponse = modelMapper.map(blog, BlogResponse.class);
         return ResponseEntity.ok(blogResponse);
@@ -54,7 +50,8 @@ public class BlogController {
 
     @ExceptionHandler({
             BlogService.BlogTitleException.class,
-            BlogService.BlogSlugException.class
+            BlogService.BlogSlugException.class,
+            UserService.UserNotFoundException.class
     })
     private ResponseEntity<BlogException> handleException(Exception ex) {
         HttpStatus status;
@@ -63,6 +60,9 @@ public class BlogController {
         if (ex instanceof BlogService.BlogTitleException) {
             status = HttpStatus.PARTIAL_CONTENT;
             message = ex.getMessage();
+        } else if (ex instanceof UserService.UserNotFoundException) {
+            message = ex.getMessage();
+            status = HttpStatus.NOT_FOUND;
         } else if (ex instanceof BlogService.BlogSlugException) {
             status = HttpStatus.NOT_FOUND;
             message = ex.getMessage();

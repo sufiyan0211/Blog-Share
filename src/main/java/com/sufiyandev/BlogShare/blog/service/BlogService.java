@@ -4,8 +4,10 @@ import com.sufiyandev.BlogShare.blog.dto.BlogCreation;
 import com.sufiyandev.BlogShare.blog.dto.UpdateBlog;
 import com.sufiyandev.BlogShare.blog.model.Blog;
 import com.sufiyandev.BlogShare.blog.repository.BlogRepository;
+import com.sufiyandev.BlogShare.security.JWTService;
 import com.sufiyandev.BlogShare.user.model.User;
 import com.sufiyandev.BlogShare.user.repository.UserRepository;
+import com.sufiyandev.BlogShare.user.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,17 +30,17 @@ public class BlogService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Blog createBlog(BlogCreation blogCreation) {
+    @Autowired
+    private JWTService jwtService;
+
+    public Blog createBlog(BlogCreation blogCreation, String accessToken) {
         if (blogCreation.getTitle() == null) throw new BlogTitleException();
         Blog blog = modelMapper.map(blogCreation, Blog.class);
 
-        // TODO: Add user to blog (set createdBy)
-        User user = new User();
-        user.setUsername("sufi");
-        user.setPassword("1235");
+        Long userId = jwtService.retrieveUserId(accessToken);
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserService.UserNotFoundException(userId));
         userRepository.save(user);
         blog.setCreatedBy(user);
-        // Remove till here
 
         blog.setCreatedAt(LocalDate.now());
         blog.setSlug(blogCreation.getTitle().toLowerCase().replaceAll("\\s+", "-"));
