@@ -67,11 +67,14 @@ public class BlogService {
         return blog;
     }
 
-    public Blog editBlog(String slug, UpdateBlog updateBlog) {
+    public Blog editBlog(String slug, UpdateBlog updateBlog, String accessToken) {
+        Long userId = jwtService.retrieveUserId(accessToken);
         Blog blog = getBlogBySlug(slug);
+        // validating that user who Created this blog can only modify it.
+        if(blog.getCreatedBy().getId() != userId) throw new UserService.InvalidUserException(blog.getCreatedBy().getId());
         blog = mapUpdateBlogToBlog(updateBlog, blog);
         blog.setModifiedAt(LocalDate.now());
-        // TODO: set modifiedBy
+        blog.setModifiedBy(blog.getCreatedBy());
         return blog;
     }
 

@@ -89,6 +89,11 @@ public class UserService {
         public InvalidUserException() {
             super("username and password does not match.");
         }
+        public InvalidUserException(Long userId) {
+            super(String.format("UserId %s have write access." , userId));
+        }
+
+
     }
 
 

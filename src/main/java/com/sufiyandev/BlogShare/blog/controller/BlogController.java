@@ -41,8 +41,10 @@ public class BlogController {
     }
 
     @PutMapping("/{slug}")
-    private ResponseEntity<BlogResponse> editBlog(@PathVariable String slug, @RequestBody UpdateBlog updateBlog) {
-        Blog blog = blogService.editBlog(slug, updateBlog);
+    private ResponseEntity<BlogResponse> editBlog(@PathVariable String slug, @RequestBody UpdateBlog updateBlog,
+                                                  @RequestHeader("Authorization") String authorization) {
+        String accessToken = authorization.substring("Bearer ".length());
+        Blog blog = blogService.editBlog(slug, updateBlog, accessToken);
         BlogResponse blogResponse = modelMapper.map(blog, BlogResponse.class);
         return ResponseEntity.ok(blogResponse);
     }
@@ -51,7 +53,8 @@ public class BlogController {
     @ExceptionHandler({
             BlogService.BlogTitleException.class,
             BlogService.BlogSlugException.class,
-            UserService.UserNotFoundException.class
+            UserService.UserNotFoundException.class,
+            UserService.InvalidUserException.class
     })
     private ResponseEntity<BlogException> handleException(Exception ex) {
         HttpStatus status;
@@ -63,6 +66,9 @@ public class BlogController {
         } else if (ex instanceof UserService.UserNotFoundException) {
             message = ex.getMessage();
             status = HttpStatus.NOT_FOUND;
+        } else if (ex instanceof UserService.InvalidUserException) {
+            message = ex.getMessage();
+            status = HttpStatus.NOT_ACCEPTABLE;
         } else if (ex instanceof BlogService.BlogSlugException) {
             status = HttpStatus.NOT_FOUND;
             message = ex.getMessage();
