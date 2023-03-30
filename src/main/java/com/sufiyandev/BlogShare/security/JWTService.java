@@ -34,7 +34,7 @@ public class JWTService {
         return JWT.create()
                 .withSubject(userId.toString())
                 .withIssuedAt(new Date())
-                // .withExpiresAt() // TODO: setup and expiry parameter
+                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000)) // TODO: setup and expiry parameter
                 .sign(algorithm);
     }
 
