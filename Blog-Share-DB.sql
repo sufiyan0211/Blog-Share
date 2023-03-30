@@ -18,5 +18,8 @@ bio varchar(255)
 
 
 DESCRIBE User;
+DESCRIBE BlogDb.`blog`;
+
 
 SELECT * FROM BlogDb.`user`;
+SELECT * FROM BlogDb.`blog`;

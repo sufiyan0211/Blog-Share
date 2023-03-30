@@ -6,6 +6,7 @@ import com.sufiyandev.BlogShare.user.model.User;
 import com.sufiyandev.BlogShare.user.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,9 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
@@ -28,8 +32,9 @@ public class UserService {
     }
 
     public User createUser(UserCreation userCreation) {
-        if(userCreation.getUsername() == null || userCreation.getPassword() == null) throw new UserCreationException();
+        if(userCreation.getUsername() == null || userCreation.getPassword() == null) throw new UserNotFoundException();
         User user = modelMapper.map(userCreation, User.class);
+        user.setPassword(passwordEncoder.encode(userCreation.getPassword()));
         userRepository.save(user);
         return user;
     }
@@ -55,22 +60,36 @@ public class UserService {
     }
 
     public User login(UserCreation userCreation) {
-        if(userCreation.getUsername() == null || userCreation.getPassword() == null) throw new UserCreationException();
+        if(userCreation.getUsername() == null || userCreation.getPassword() == null) throw new UserNotFoundException();
         User user = findByUsername(userCreation.getUsername());
-        // TODO: Password validations
+        if(!passwordEncoder.matches(userCreation.getPassword(), user.getPassword())) throw new InvalidUserException();
         return user;
     }
+
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
+    }
+
 
     public static class UserNotFoundException extends IllegalArgumentException {
         public UserNotFoundException(String username) {
             super("Username: " + username + " not found in the database.");
         }
-    }
 
-    public static class UserCreationException extends IllegalArgumentException {
-        public UserCreationException() {
+        public UserNotFoundException(Long userId) {
+            super("UserId: " + userId + " not found in the database.");
+        }
+
+        public UserNotFoundException() {
             super("username and password can not empty");
         }
     }
+
+    public static class InvalidUserException extends IllegalArgumentException {
+        public InvalidUserException() {
+            super("username and password does not match.");
+        }
+    }
+
 
 }
