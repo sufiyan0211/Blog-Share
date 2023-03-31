@@ -26,6 +26,8 @@ Blog-Share
   
   
 ## API Documentation
+To use the below APIs import **BlogShare.postman_collection.json** collection into your API Client.<br>
+Run the application by cli ``` java -jar Blog-Share/target/Blog-Share-0.0.1-SNAPSHOT.jar ```
 ### User related API
 - <b>Creating User</b>
   - <b>Endpoint:</b> *http://localhost:8091/users/signup*
