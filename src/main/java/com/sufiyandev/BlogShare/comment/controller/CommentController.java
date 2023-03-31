@@ -68,7 +68,7 @@ public class CommentController {
      * @param authorization
      * @return
      */
-    @RequestMapping(value = "{slug}/comments/{commentId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/comments/{commentId}", method = RequestMethod.DELETE)
     private ResponseEntity<String> deleteComment(@PathVariable Long commentId,
                                                  @RequestHeader("Authorization") String authorization) {
         String accessToken = authorization.substring("Bearer ".length());
