@@ -40,7 +40,49 @@ Blog-Share
         "password" : "SomePass"
       }
       ```
-  
+
+### Blog related API
+- <b>Post a Blog</b>
+  - <b>Endpoint:</b> *http://localhost:8091/blogs/create*
+  - <b>Payload:</b> example payload
+      ```
+      {
+        "title" : "My Blog",
+        "body" : "Something in body"
+      }
+      ```
+- <b>Get Blog by Slug</b>
+  - <b>Endpoint:</b> *http://localhost:8091/blogs/{slug}*  
+- <b>Modify Blog</b>
+  - <b>Endpoint:</b> *http://localhost:8091/blogs/{slug}*
+  - <b>Payload:</b> example payload
+      ```
+      {
+        "title" : "My Blog",
+        "body" : "Edited this body"
+      }
+      ```
+### Comment related API
+- <b>Post Comment</b>
+  - <b>Endpoint:</b> *http://localhost:8091/blogs/{slug}/comments*
+  - <b>Payload:</b> example payload
+      ```
+      {
+        "body" : "1 comment"
+      }
+      ```
+- <b>Get All Comments by Slug</b>
+  - <b>Endpoint:</b> *http://localhost:8091/blogs/{slug}/comments*  
+- <b>Modify Comment by CommentId</b>
+  - <b>Endpoint:</b> *http://localhost:8091/blogs/comments/{commentId}*
+  - <b>Payload:</b> example payload
+      ```
+      {
+        "body" : "1 comment edited"
+      }
+      ```
+- <b>Delete Comment by CommentId</b>
+  - <b>Endpoint:</b> *http://localhost:8091/blogs/comments/{commentId}*  
   
   
 ## Key Points
