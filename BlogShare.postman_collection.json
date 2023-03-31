@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\" : \"deepak\",\n    \"password\" : \"1234\"\n}",
+					"raw": "{\n    \"name\" : \"MyName\",\n    \"username\" : \"MyUserName\",\n    \"password\" : \"SomePass\",\n    \"email\": \"username@test.com\",\n    \"bio\": \"About my self\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -62,7 +62,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\" : \"adnan\",\n    \"password\" : \"1234\"\n}",
+					"raw": "{\n    \"username\" : \"MyUserName\",\n    \"password\" : \"SomePass\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,7 +101,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\" : \"Hello World\",\n    \"body\" : \"Something in body\"\n}",
+					"raw": "{\n    \"title\" : \"My Blog\",\n    \"body\" : \"Something in body\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -129,7 +129,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8091/blogs/hello-world",
+					"raw": "http://localhost:8091/blogs/my-blog",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -137,7 +137,7 @@
 					"port": "8091",
 					"path": [
 						"blogs",
-						"hello-world"
+						"my-blog"
 					]
 				}
 			},
@@ -146,11 +146,21 @@
 		{
 			"name": "Edit a Blog",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjgwMTQ0NDEyfQ.8Vlwm9USuMVE6UKga6kMVm6SHyPZg_QU_j4KclCeygY",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\" : \"Hello World\",\n    \"body\" : \"Something body\"\n}",
+					"raw": "{\n    \"title\" : \"My Blog\",\n    \"body\" : \"Edited this body\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -158,7 +168,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8091/blogs/hello-world",
+					"raw": "http://localhost:8091/blogs/my-blog",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -166,7 +176,7 @@
 					"port": "8091",
 					"path": [
 						"blogs",
-						"hello-world"
+						"my-blog"
 					]
 				}
 			},
@@ -175,6 +185,16 @@
 		{
 			"name": "Post a Comment",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjgwMTQ0NDEyfQ.8Vlwm9USuMVE6UKga6kMVm6SHyPZg_QU_j4KclCeygY",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -187,7 +207,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8091/blogs/hello-world/comments",
+					"raw": "http://localhost:8091/blogs/my-blog/comments",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -195,7 +215,7 @@
 					"port": "8091",
 					"path": [
 						"blogs",
-						"hello-world",
+						"my-blog",
 						"comments"
 					]
 				}
@@ -208,7 +228,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8091/blogs/hello-world/comments",
+					"raw": "http://localhost:8091/blogs/my-blog/comments",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -216,7 +236,7 @@
 					"port": "8091",
 					"path": [
 						"blogs",
-						"hello-world",
+						"my-blog",
 						"comments"
 					]
 				}
@@ -226,6 +246,16 @@
 		{
 			"name": "Delete a comment by commentId",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjgwMTQ0NDEyfQ.8Vlwm9USuMVE6UKga6kMVm6SHyPZg_QU_j4KclCeygY",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
@@ -247,10 +277,29 @@
 		{
 			"name": "edit a comment",
 			"request": {
-				"method": "GET",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjgwMTQ0NDEyfQ.8Vlwm9USuMVE6UKga6kMVm6SHyPZg_QU_j4KclCeygY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"body\" : \"1 comment edited\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8091/blogs/comments/1",
+					"raw": "http://localhost:8091/blogs/comments/4",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -259,7 +308,7 @@
 					"path": [
 						"blogs",
 						"comments",
-						"1"
+						"4"
 					]
 				}
 			},
