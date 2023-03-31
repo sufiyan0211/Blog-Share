@@ -1,10 +1,10 @@
 Blog-Share
 ===
 
-# Design
+## Design
 <img src="DB Schema.png" alt=""> 
 
-# Description of the project
+## Description of the project
 - This webapp have three entities (i.e User, Blog and Comment) the relation among them is shown in the above design.
 - API's is authenticated by Spring Security and JWT (Json-Web-Token).
 - Some of the authorizations
@@ -17,9 +17,35 @@ Blog-Share
   - Only owner of the comment can modify the comment.
   
   
-  # Key Points
-  - Spring Boot & Maven builder
-  - Spring Security
-  - JWT (Json Web Token)
-  - My Sql Database
-  - Well defined custom Exceptions for all the APIs
+## API Documentation
+### User related API
+- <b>Creating User</b>
+  - <b>Endpoint:</b> *http://localhost:8091/users/signup*
+  - <b>Payload:</b> example payload
+      ```
+      {
+        "name" : "MyName",
+        "username" : "MyUserName",
+        "password" : "SomePass",
+        "email": "username@test.com",
+        "bio": "About my self"
+      }
+      ```
+- <b>Login User</b>
+  - <b>Endpoint:</b> *http://localhost:8091/users/login*
+  - <b>Payload:</b> example payload
+      ```
+      {
+        "username" : "MyUserName",
+        "password" : "SomePass"
+      }
+      ```
+  
+  
+  
+## Key Points
+- Spring Boot & Maven builder
+- Spring Security
+- JWT (Json Web Token)
+- My Sql Database
+- Well defined custom Exceptions for all the APIs
