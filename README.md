@@ -1,6 +1,14 @@
 Blog-Share
 ===
 
+## Content
+* [Design](#design)
+* [API Documentation](#api-documentation)
+  * [User related API](#user-related-api)
+  * [Blog related API](#blog-related-api)
+  * [Comment related API](#comment-related-api)
+* [Key Points](#key-points)
+
 ## Design
 <img src="DB Schema.png" alt=""> 
 
